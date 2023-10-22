@@ -7,25 +7,37 @@
 
 import SwiftUI
 
+enum ColorType: String {
+    case green = "green"
+    case red = "red"
+    case blue = "blue"
+    case yellow = "yellow"
+    case orange = "orange"
+    case pink  = "pink"
+    case purple = "purple"
+}
 struct CreateNewActionView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var headerTitle: String = ""
     @State private var title: String = "Tiêu đề"
     @State private var description: String = "Thêm chi tiết"
     @State private var isChooseAllDay: Bool = false
+    @State private var isReminder: Bool = false
     
     var componenst: ComponenstType
     
     var body: some View {
         VStack(spacing: 1) {
             headerView()
-            Spacer()
-            titleView()
-            Spacer()
-            selecDate()
-            Spacer()
+                .frame(width: 350, height: 30)
+                
+            ScrollView(showsIndicators: false) {
+                titleView()
+                    .padding()
+                selecDate()
+                    .padding()
+            }
         }
-        
         .onAppear(perform: {
             componenstType()
         })
@@ -33,14 +45,179 @@ struct CreateNewActionView: View {
     
     @ViewBuilder
     func selecDate() -> some View {
-        VStack {
+        VStack(spacing: 1) {
             ZStack {
+                Rectangle()
+                    .frame(width: 350, height: 535)
+                    .cornerRadius(20)
+                    .shadow(color: Color.orange.opacity(0.5), radius: 10, x: 5, y: 5)
+                    .foregroundColor(.white)
                 
+                VStack {
+                    selecDateBody()
+                }
             }
         }
-        .background(Color.white)
-        .shadow(color: Color.orange.opacity(0.5), radius: 10, x: 5, y: 5)
     }
+    
+    @ViewBuilder
+    func selecDateBody() -> some View {
+        Section {
+            VStack {
+                HStack {
+                    Toggle(isOn: $isChooseAllDay, label: {
+                        Image(systemName: "calendar")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 25, height: 25)
+                            .foregroundColor(Color.green.opacity(0.75))
+                        Text("Cả ngày")
+                    })
+                }
+                .padding()
+            }
+            HStack{
+                Button(action: {
+                    /// To do some thing here
+                    print("vuongdv right")
+                }, label: {
+                    Image(systemName: "arrow.right")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(Color.green.opacity(0.75))
+                })
+                Text(CalendarHelper().convertCurrentDayString(with: .full))
+                Spacer()
+                Text(CalendarHelper().currentTimeString(with: "h:mm a"))
+            }
+            .padding()
+            
+            HStack{
+                Button(action: {
+                    print("vuongdv left")
+                }, label: {
+                    Image(systemName: "arrow.left")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(Color.green.opacity(0.75))
+                })
+                
+                Text(CalendarHelper().convertCurrentDayString(with: .full))
+                Spacer()
+                Text(CalendarHelper().currentTimeString(with: "h:mm a"))
+            }
+            .padding()
+        }
+        Rectangle()
+            .frame(width: 250, height: 1)
+            .foregroundColor(.gray)
+        HStack {
+            Toggle(isOn: $isReminder, label: {
+                Image(systemName: "calendar")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(Color.green.opacity(0.75))
+                Text("Set reminder")
+            })
+        }
+        .padding()
+        
+        HStack {
+            Image(systemName: "clock.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 25, height: 25)
+                .foregroundColor(Color.green.opacity(0.75))
+            Text("15 minutes before")
+            Spacer()
+            Button(action: {
+                /// To do action here
+            }, label: {
+                Image(systemName: "xmark")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(Color.green.opacity(0.75))
+                
+            })
+        }
+        .padding()
+        
+        HStack {
+            Button(action: {
+                /// To do someThing here
+            }, label: {
+                Image(systemName: "plus")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(Color.green.opacity(0.75))
+            })
+            
+            Text("Add reminder")
+            Spacer()
+        }
+        .padding()
+        
+        HStack {
+            Button(action: {
+                /// To do someThing here
+            }, label: {
+                Image(systemName: "repeat")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(Color.green.opacity(0.75))
+            })
+            Text("Không bao giờ")
+            Spacer()
+        }
+        .padding()
+        HStack {
+            Button(action: {
+                
+            }, label: {
+                Image(systemName: "eyedropper")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(Color.green.opacity(0.75))
+            })
+            Text("Custom")
+                .font(.title)
+                .bold()
+            Spacer()
+            
+            Button(action: {
+                /// Action here
+            }, label: {
+                Image(systemName: "chevron.right")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(Color.green.opacity(0.75))
+            })
+        
+        }
+        .padding()
+    }
+    
+    @ViewBuilder
+    func changeColorButtoms(with color: ColorType) -> some View {
+        Button(action: {
+            
+        }, label: {
+            Image(systemName: "circle")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 25, height: 25)
+            
+        })
+    }
+    
     @ViewBuilder
     func titleView() -> some View {
         TitleComponenstView()
@@ -54,7 +231,7 @@ struct CreateNewActionView: View {
                     .frame(width: 350, height: 120, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     .cornerRadius(20)
                     .foregroundColor(.white)
-                    .shadow(color: Color.orange.opacity(0.5), radius: 10, x: 7, y: 7)
+                    .shadow(color: Color.orange.opacity(0.5), radius: 7, x: 5, y: 5)
                 HStack {
                     VStack(spacing: 0) {
                         TextEditor(text: $title)
@@ -91,16 +268,17 @@ struct CreateNewActionView: View {
                                 .foregroundColor(Color.black)
                         }
                     })
-                    .padding(.trailing, 10)
+                    .padding(.trailing, 15)
                     .padding(.top, -40)
                     Spacer()
                 }
-                .padding(.top, -5)
+                .padding(.top, -1)
             }
             Spacer()
         }
     }
     
+    /// Mark: - Header View
     @ViewBuilder
     func headerView() -> some View {
         HStack {

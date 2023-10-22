@@ -29,9 +29,17 @@ class CalendarHelper {
     }
     
     /// Current date
-    func convertCurrentDayString() -> String {
+    func convertCurrentDayString(with style: DateFormatter.Style) -> String {
         let currentDay = Date()
-        dateFormatter.dateStyle = .full
+        dateFormatter.dateStyle = style
+        return dateFormatter.string(from: currentDay)
+    }
+    
+    /// Get current time
+    
+    func currentTimeString(with formatter: String) -> String {
+        let currentDay = Date()
+        dateFormatter.dateFormat = formatter
         return dateFormatter.string(from: currentDay)
     }
     

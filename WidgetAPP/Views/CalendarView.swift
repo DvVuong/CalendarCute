@@ -87,7 +87,7 @@ struct CurrentDateView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30, height: 30)
             
-            Text(CalendarHelper().convertCurrentDayString())
+            Text(CalendarHelper().convertCurrentDayString(with: .full))
                 .font(.system(size: 15))
                 .bold()
                 .padding()
