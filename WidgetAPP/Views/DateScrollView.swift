@@ -18,8 +18,8 @@ struct DateScrollView: View {
             }, label: {
                 Image(systemName: "arrow.left")
                     .resizable()
-                    .font(.system(size: 30, weight: .semibold))
-                    .frame(width: 30, height: 30)
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(Color.green.opacity(0.75))
             })
             
             Text(CalendarHelper().monthYearString(dateHolper.date))
@@ -31,8 +31,8 @@ struct DateScrollView: View {
             }, label: {
                 Image(systemName: "arrow.right")
                     .resizable()
-                    .font(.system(size: 30, weight: .semibold))
-                    .frame(width: 30, height: 30)
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(Color.green.opacity(0.75))
             })
             Spacer()
         }

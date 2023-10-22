@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CalendarCell: View {
     @EnvironmentObject var dateHolper: DateHolder
-    
     let count: Int
     let startingSpaces: Int
     let daysInMonth: Int
@@ -34,11 +33,12 @@ struct CalendarCell: View {
                     Text(monthStruct().day)
                         .foregroundColor(textColor(type: monthStruct().monthType))
                         .frame(width: 50, height: 10)
-                        .padding([.top, .leading], 5)
+                        .padding(.leading, -20)
+                        .padding(.top, 10)
                     Spacer()
                 }
             }
-            .frame(width: 50, height: 150)
+            .frame(width: 50, height: 100)
         }
         .overlay(RoundedRectangle(cornerRadius: 0).stroke(Color.orange))
     }

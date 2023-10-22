@@ -6,8 +6,13 @@
 //
 
 import SwiftUI
+enum ComponenstType {
+    case Event, Todo, Memo, Diary
+}
 
 struct ComponenstView: View {
+    @Binding var isShowCreateView: Bool
+    @Binding var componenstType: ComponenstType
     var body: some View {
         ZStack {
             Rectangle()
@@ -23,20 +28,30 @@ struct ComponenstView: View {
                     .padding()
                 
                 HStack(spacing: 25) {
-                    ItemsView("calendar.circle.fill", title: "Event", color: .green)
-                    ItemsView("chevron.down.circle.fill", title: "To do", color: .orange)
-                    ItemsView("doc.text", title: "Memo", color: .yellow)
-                    ItemsView("pencil.circle.fill", title: "Diary", color: .gray)
+                        ItemsView("calendar.circle.fill", title: "Event", color: .green, componenstType: .Event)
+                        ItemsView("chevron.down.circle.fill", title: "To do", color: .orange, componenstType: .Todo)
+                        ItemsView("doc.text", title: "Memo", color: .yellow, componenstType: .Memo)
+                        ItemsView("pencil.circle.fill", title: "Diary", color: .gray, componenstType: .Diary)
                 }
             }
         }
     }
     
     @ViewBuilder
-    func ItemsView(_ icon: String, title: String, color: Color) -> some View {
+    func ItemsView(_ icon: String, title: String, color: Color, componenstType: ComponenstType) -> some View {
         VStack {
             Button(action: {
-                
+                isShowCreateView.toggle()
+                switch componenstType {
+                case .Event:
+                    self.componenstType = .Event
+                case .Todo:
+                    self.componenstType = .Todo
+                case .Memo:
+                    self.componenstType = .Memo
+                case .Diary:
+                    self.componenstType = .Diary
+                }
             }, label: {
                 VStack {
                     Image(systemName: icon)
@@ -56,6 +71,6 @@ struct ComponenstView: View {
 
 struct ComponenstView_Previews: PreviewProvider {
     static var previews: some View {
-        ComponenstView()
+        ComponenstView(isShowCreateView: .constant(false), componenstType: .constant(.Todo))
     }
 }

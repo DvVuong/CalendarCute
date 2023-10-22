@@ -14,6 +14,7 @@
 		7241711A2AE38B5B00542578 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724171192AE38B5B00542578 /* CalendarHelper.swift */; };
 		7241711F2AE39A6200542578 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7241711E2AE39A6200542578 /* CalendarCell.swift */; };
 		724171222AE39B5500542578 /* MonthStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724171212AE39B5500542578 /* MonthStruct.swift */; };
+		725EE9F62AE4D60800BBE2D9 /* CreateNewActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725EE9F52AE4D60800BBE2D9 /* CreateNewActionView.swift */; };
 		72CA7C0A2AE25DE800F7D4E1 /* WidgetAPPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CA7C092AE25DE800F7D4E1 /* WidgetAPPApp.swift */; };
 		72CA7C0C2AE25DE900F7D4E1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CA7C0B2AE25DE900F7D4E1 /* ContentView.swift */; };
 		72CA7C0E2AE25DEA00F7D4E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72CA7C0D2AE25DEA00F7D4E1 /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		724171192AE38B5B00542578 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		7241711E2AE39A6200542578 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		724171212AE39B5500542578 /* MonthStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthStruct.swift; sourceTree = "<group>"; };
+		725EE9F52AE4D60800BBE2D9 /* CreateNewActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewActionView.swift; sourceTree = "<group>"; };
 		72CA7C062AE25DE800F7D4E1 /* WidgetAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WidgetAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72CA7C092AE25DE800F7D4E1 /* WidgetAPPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetAPPApp.swift; sourceTree = "<group>"; };
 		72CA7C0B2AE25DE900F7D4E1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -59,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		725EE9F82AE5299000BBE2D9 /* CreateNewActionView */ = {
+			isa = PBXGroup;
+			children = (
+				725EE9F52AE4D60800BBE2D9 /* CreateNewActionView.swift */,
+			);
+			path = CreateNewActionView;
+			sourceTree = "<group>";
+		};
 		72CA7BFD2AE25DE800F7D4E1 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +112,7 @@
 		72CA7C192AE2618F00F7D4E1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				725EE9F82AE5299000BBE2D9 /* CreateNewActionView */,
 				72CA7C0B2AE25DE900F7D4E1 /* ContentView.swift */,
 				724171162AE388FF00542578 /* DateScrollView.swift */,
 				72CA7C1E2AE261DC00F7D4E1 /* TaskView.swift */,
@@ -236,6 +247,7 @@
 				724171112AE3666700542578 /* CalendarView.swift in Sources */,
 				72CA7C282AE2655D00F7D4E1 /* View+Extensions.swift in Sources */,
 				724171222AE39B5500542578 /* MonthStruct.swift in Sources */,
+				725EE9F62AE4D60800BBE2D9 /* CreateNewActionView.swift in Sources */,
 				724171142AE3883A00542578 /* DateHolder.swift in Sources */,
 				72CA7C2B2AE265A600F7D4E1 /* Date+Extensions.swift in Sources */,
 				7241711F2AE39A6200542578 /* CalendarCell.swift in Sources */,

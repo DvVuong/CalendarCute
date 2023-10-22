@@ -9,24 +9,28 @@ import SwiftUI
 
 struct CalendarView: View {
     @EnvironmentObject var dateHolper: DateHolder
-    @State private var day: String = ""
-    let dayOfWeek: [String] = [ "CN", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7"]
+    @State private var isShowCreateView: Bool = false
+    @State private var componenstType: ComponenstType = ComponenstType.Event
+    
+    let dayOfWeek: [String] = ["CN", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7"]
     var currentDay: Date = .init()
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 0) {
-                DateScrollView()
-                    .environmentObject(dateHolper)
-                    .padding()
-                DayOfWeekStack()
-                CalendarGrid()
-                CurrentDateView()
-                ComponenstView()
-                    .padding()
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 0) {
+                    DateScrollView()
+                        .environmentObject(dateHolper)
+                        .padding()
+                    DayOfWeekStack()
+                    CalendarGrid()
+                    CurrentDateView()
+                    ComponenstView(isShowCreateView: $isShowCreateView, componenstType: $componenstType)
+                        .padding()
+                }
             }
+            .sheet(isPresented: $isShowCreateView, content: {
+                CreateNewActionView(componenst: componenstType)
+            })
         }
-    }
-    
     @ViewBuilder
     func DayOfWeekStack() -> some View {
         HStack(spacing: 0) {
