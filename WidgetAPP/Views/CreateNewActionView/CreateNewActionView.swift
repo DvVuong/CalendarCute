@@ -16,6 +16,22 @@ enum ColorType: String {
     case pink  = "pink"
     case purple = "purple"
 }
+enum buttomTag: Int {
+    case green = 0
+    case red = 1
+    case blue = 2
+    case yellow = 3
+    case orange = 4
+    case pink  = 5
+    case purple = 6
+}
+
+struct ColorStruct {
+    var color: Color
+
+}
+
+
 struct CreateNewActionView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var headerTitle: String = ""
@@ -23,23 +39,62 @@ struct CreateNewActionView: View {
     @State private var description: String = "Thêm chi tiết"
     @State private var isChooseAllDay: Bool = false
     @State private var isReminder: Bool = false
+    @State private var isChooseTimeStart: Bool = false
+    @State private var isChooseTimeEnd: Bool = false
+    @State private var startDateChooseted: Date = Date()
+    @State private var endDateChooseted: Date = Date()
+    @State var selected = 0
+    @State var customColor: ColorStruct = ColorStruct(color: .green)
     
+    let arrayButtom: [ButtomStruct] = [
+        ButtomStruct(id: 0, color: Color.green),
+        ButtomStruct(id: 1, color: Color.red),
+        ButtomStruct(id: 2, color: Color.yellow),
+        ButtomStruct(id: 3, color: Color.orange),
+        ButtomStruct(id: 4, color: Color.pink),
+        ButtomStruct(id: 5, color: Color.purple)
+    ]
     var componenst: ComponenstType
     
     var body: some View {
         VStack(spacing: 1) {
-            headerView()
-                .frame(width: 350, height: 30)
-                
-            ScrollView(showsIndicators: false) {
-                titleView()
-                    .padding()
-                selecDate()
-                    .padding()
+            ScrollView {
+                ZStack {
+                    VStack {
+                        headerView()
+                            .frame(width: 350, height: 30)
+                        ScrollView(showsIndicators: false) {
+                            titleView()
+                                .padding()
+                            selecDate()
+                                .padding()
+                        }
+                    }
+                    
+                    if isChooseTimeStart {
+                        Color.black.opacity(0.25)
+                        ChooseTimeDatePickerView(date: $startDateChooseted, cancel: $isChooseTimeStart, titleHeader: "Chọn thời gian bắt đầu")
+                            .padding(.top, 380)
+                            .transition(.move(edge: .bottom))
+                            .animation(.spring())
+                    }else if isChooseTimeEnd {
+                        Color.black.opacity(0.25)
+                        
+                        ChooseTimeDatePickerView(date: $endDateChooseted, cancel: $isChooseTimeEnd, titleHeader: "Chọn thời gian kết thúc")
+                            .padding(.top, 380)
+                            .transition(.move(edge: .bottom))
+                            .animation(.spring())
+                            
+                    }
+                }
             }
         }
         .onAppear(perform: {
             componenstType()
+            let color = UserDefaultManager.shared.loadColor()
+            let index = UserDefaultManager.shared.loadIndexColor()
+            customColor.color = color
+            selected = index
         })
     }
     
@@ -48,7 +103,7 @@ struct CreateNewActionView: View {
         VStack(spacing: 1) {
             ZStack {
                 Rectangle()
-                    .frame(width: 350, height: 535)
+                    .frame(minWidth: 350, maxWidth: .infinity, minHeight: 600, maxHeight: .infinity)
                     .cornerRadius(20)
                     .shadow(color: Color.orange.opacity(0.5), radius: 10, x: 5, y: 5)
                     .foregroundColor(.white)
@@ -69,44 +124,48 @@ struct CreateNewActionView: View {
                         Image(systemName: "calendar")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(Color.green.opacity(0.75))
+                            .frame(width: 20, height: 20)
+                            .foregroundColor(customColor.color)
                         Text("Cả ngày")
                     })
+                    .toggleStyle(SwitchToggleStyle(tint: customColor.color))
+                    
                 }
                 .padding()
             }
             HStack{
                 Button(action: {
-                    /// To do some thing here
-                    print("vuongdv right")
+                    /// To do action Choose Start time
+                    isChooseTimeStart.toggle()
                 }, label: {
                     Image(systemName: "arrow.right")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(Color.green.opacity(0.75))
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(customColor.color)
                 })
-                Text(CalendarHelper().convertCurrentDayString(with: .full))
+                Text(startDateChooseted.formatterDateStyle(with: "EEEE, MMM d, yyyy"))
                 Spacer()
-                Text(CalendarHelper().currentTimeString(with: "h:mm a"))
+                Text(startDateChooseted.formatterDateStyle(with: "h:mm a"))
             }
             .padding()
             
             HStack{
                 Button(action: {
-                    print("vuongdv left")
+                    /// Action choose time end
+                    isChooseTimeEnd.toggle()
                 }, label: {
                     Image(systemName: "arrow.left")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 25, height: 25)
-                        .foregroundColor(Color.green.opacity(0.75))
+                        .frame(width: 15, height: 15)
+                        .foregroundColor(customColor.color)
                 })
                 
-                Text(CalendarHelper().convertCurrentDayString(with: .full))
+                Text(endDateChooseted.formatterDateStyle(with: "EEEE, MMM d, yyyy"))
+                
                 Spacer()
-                Text(CalendarHelper().currentTimeString(with: "h:mm a"))
+                Text(endDateChooseted.formatterDateStyle(with: "h:mm a"))
             }
             .padding()
         }
@@ -118,10 +177,11 @@ struct CreateNewActionView: View {
                 Image(systemName: "calendar")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(Color.green.opacity(0.75))
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(customColor.color)
                 Text("Set reminder")
             })
+            .toggleStyle(SwitchToggleStyle(tint: customColor.color))
         }
         .padding()
         
@@ -129,8 +189,8 @@ struct CreateNewActionView: View {
             Image(systemName: "clock.fill")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: 25, height: 25)
-                .foregroundColor(Color.green.opacity(0.75))
+                .frame(width: 15, height: 15)
+                .foregroundColor(customColor.color)
             Text("15 minutes before")
             Spacer()
             Button(action: {
@@ -139,9 +199,8 @@ struct CreateNewActionView: View {
                 Image(systemName: "xmark")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(Color.green.opacity(0.75))
-                
+                    .frame(width: 15, height: 15)
+                    .foregroundColor(customColor.color)
             })
         }
         .padding()
@@ -153,8 +212,8 @@ struct CreateNewActionView: View {
                 Image(systemName: "plus")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(Color.green.opacity(0.75))
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(customColor.color)
             })
             
             Text("Add reminder")
@@ -169,53 +228,50 @@ struct CreateNewActionView: View {
                 Image(systemName: "repeat")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(Color.green.opacity(0.75))
+                    .frame(width: 20, height: 20)
+                    .foregroundColor(customColor.color)
             })
             Text("Không bao giờ")
             Spacer()
         }
         .padding()
-        HStack {
-            Button(action: {
-                
-            }, label: {
-                Image(systemName: "eyedropper")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(Color.green.opacity(0.75))
-            })
-            Text("Custom")
-                .font(.title)
-                .bold()
-            Spacer()
-            
-            Button(action: {
-                /// Action here
-            }, label: {
-                Image(systemName: "chevron.right")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 25, height: 25)
-                    .foregroundColor(Color.green.opacity(0.75))
-            })
         
+        VStack(spacing: 0) {
+            HStack {
+                Button(action: {
+                    
+                }, label: {
+                    Image(systemName: "eyedropper")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(customColor.color)
+                })
+                Text("Custom")
+                    .font(.title)
+                    .bold()
+                Spacer()
+                
+                Button(action: {
+                    /// Action here
+                }, label: {
+                    Image(systemName: "chevron.right")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20, height: 20)
+                        .foregroundColor(customColor.color)
+                })
+            }
+            .padding()
+            /// Mark: - Custom Color
+            HStack(spacing: 10) {
+                ForEach(arrayButtom, id: \.id) { button in
+                    BoxView(selectedButton: $selected, buttonTag: button, color: $customColor)
+                }
+            }
+            .padding()
         }
-        .padding()
-    }
-    
-    @ViewBuilder
-    func changeColorButtoms(with color: ColorType) -> some View {
-        Button(action: {
-            
-        }, label: {
-            Image(systemName: "circle")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 25, height: 25)
-            
-        })
+        .padding(.top, 20)
     }
     
     @ViewBuilder
@@ -228,7 +284,7 @@ struct CreateNewActionView: View {
         VStack {
             ZStack {
                 Rectangle()
-                    .frame(width: 350, height: 120, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .frame(minWidth: 350, maxWidth: .infinity, minHeight: 120, maxHeight: .infinity)
                     .cornerRadius(20)
                     .foregroundColor(.white)
                     .shadow(color: Color.orange.opacity(0.5), radius: 7, x: 5, y: 5)
@@ -240,6 +296,7 @@ struct CreateNewActionView: View {
                             .onTapGesture {
                                 title = ""
                             }
+                            
                             .onChange(of: title, perform: { value in
                                 title = value
                             })
@@ -262,8 +319,8 @@ struct CreateNewActionView: View {
                             Image(systemName: "plus.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 35, height: 35)
-                                .foregroundColor(Color.green.opacity(0.5))
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(customColor.color)
                             Text("Sticker")
                                 .foregroundColor(Color.black)
                         }
@@ -290,7 +347,7 @@ struct CreateNewActionView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
-                    .foregroundColor(Color.green.opacity(0.75))
+                    .foregroundColor(customColor.color)
             })
             Spacer()
             
@@ -305,7 +362,7 @@ struct CreateNewActionView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 20, height: 20)
-                    .foregroundColor(Color.green.opacity(0.75))
+                    .foregroundColor(customColor.color)
             })
         }
         .padding()
@@ -329,5 +386,26 @@ struct CreateNewActionView: View {
 struct CreateNewActionView_Previews: PreviewProvider {
     static var previews: some View {
         CreateNewActionView(componenst: .Event)
+    }
+}
+
+struct BoxView: View {
+    @Binding var selectedButton: Int
+    var buttonTag: ButtomStruct
+    @Binding var color: ColorStruct
+    var body: some View {
+        Button(action: {
+            self.selectedButton = self.buttonTag.id
+            self.color.color = buttonTag.color
+            UserDefaultManager.shared.saveColor(with: color.color)
+            UserDefaultManager.shared.saveIndexColor(with: self.selectedButton)
+        }, label: {
+            Image(systemName: (selectedButton == self.buttonTag.id) ? "largecircle.fill.circle" : "circle.fill" )
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 25, height: 25)
+                .foregroundColor(buttonTag.color)
+        })
+
     }
 }

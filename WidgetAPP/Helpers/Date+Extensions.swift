@@ -20,6 +20,13 @@ extension Date {
         formatter.dateStyle = .full
         return formatter.string(from: self)
     }
+    /// Formatter String
+    
+    func formatterDateStyle(with style: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = style
+        return formatter.string(from: self)
+    }
     
     /// Checking Whether the Date is Today
     
