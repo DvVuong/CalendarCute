@@ -11,6 +11,8 @@ struct CalendarView: View {
     @EnvironmentObject var dateHolper: DateHolder
     @State private var isShowCreateView: Bool = false
     @State private var componenstType: ComponenstType = ComponenstType.Event
+    @State private var arraysItem: [TaskItem] = []
+   
     
     let dayOfWeek: [String] = ["CN", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7"]
     var currentDay: Date = .init()
@@ -28,9 +30,13 @@ struct CalendarView: View {
                 }
             }
             .sheet(isPresented: $isShowCreateView, content: {
-                CreateNewActionView(componenst: componenstType)
+                CreateNewActionView(closureArrays: { item in
+                    arraysItem = item
+                    print("vuongdv arraysItem", arraysItem.count)
+                }, componenst: componenstType)
             })
         }
+    
     @ViewBuilder
     func DayOfWeekStack() -> some View {
         HStack(spacing: 0) {
@@ -61,7 +67,7 @@ struct CalendarView: View {
                 HStack(spacing: 0) {
                     ForEach(1..<8) { column in
                         let count = column + (row * 7)
-                        CalendarCell(count: count,
+                        CalendarCell(arrasy: arraysItem, count: count,
                                      startingSpaces: startingSpaces,
                                      daysInMonth: daysInMonth,
                                      daysInPrevMonth: daysInPrevMonth)

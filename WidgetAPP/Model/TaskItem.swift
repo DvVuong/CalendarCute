@@ -8,22 +8,33 @@
 import Foundation
 import SwiftUI
 
-struct TaskItem: Identifiable {
-    var id: UUID = .init()
-    var taskTitle: String
-    var creationDate: Date = .init()
-    var isCompelete: Bool = false
-    var tint: Color
+class TaskItem: ObservableObject, Identifiable {
+    @Published var id: UUID = UUID()
+    @Published var taskType: ComponenstType
+    @Published var taskTitle: String
+    @Published var taskDescription: String
+    @Published var creationDate: Date
+    @Published var endDate: Date
+    @Published var isCompelete: Bool = false
+    @Published var tint: Color
+    @Published var isAllDay: Bool
+    @Published var isSetReminder: Bool
+    @Published var alertBefore: Date
+    
+    init(id: UUID, taskType: ComponenstType, taskTitle: String, taskDescription: String, creationDate: Date, endDate: Date, tint: Color, isAllDay: Bool, isSetReminder: Bool, alertBefore: Date, isCompelete: Bool) {
+        self.id = id
+        self.taskType = taskType
+        self.taskDescription = taskDescription
+        self.creationDate = creationDate
+        self.endDate = endDate
+        self.isCompelete = isCompelete
+        self.tint = tint
+        self.isAllDay = isAllDay
+        self.alertBefore = alertBefore
+        self.taskTitle = taskTitle
+        self.isSetReminder = isSetReminder
+    }
 }
-
-var tasl: [TaskItem] = [
-    .init(taskTitle: "Record Video", creationDate: .updateHour(-5), isCompelete: false, tint: Color.yellow),
-    .init(taskTitle: "Redesgin Website", creationDate: .updateHour(-3), isCompelete: false, tint: Color.green),
-    .init(taskTitle: "Go for a walk", creationDate: .updateHour(-4), isCompelete: false, tint: Color.gray),
-    .init(taskTitle: "Edit Video", creationDate: .updateHour(-2), isCompelete: false, tint: Color.black),
-    .init(taskTitle: "Publish Video", creationDate: .updateHour(-1), isCompelete: false, tint: Color.blue),
-    .init(taskTitle: "Tweet abount new Video!", creationDate: .updateHour(-0), isCompelete: false, tint: Color.pink)
-]
 
 extension Date {
     static func updateHour(_ value: Int) -> Date {

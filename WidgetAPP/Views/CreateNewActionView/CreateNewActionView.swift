@@ -33,7 +33,10 @@ struct ColorStruct {
 
 
 struct CreateNewActionView: View {
+    //Mark: - Environment
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var taskItem : TaskItem
+    //Mark: - @State
     @State private var headerTitle: String = ""
     @State private var title: String = "Tiêu đề"
     @State private var description: String = "Thêm chi tiết"
@@ -45,6 +48,9 @@ struct CreateNewActionView: View {
     @State private var endDateChooseted: Date = Date()
     @State var selected = 0
     @State var customColor: ColorStruct = ColorStruct(color: .green)
+    //Mark: -Binding
+    
+    var closureArrays: (([TaskItem]) -> Void)
     
     let arrayButtom: [ButtomStruct] = [
         ButtomStruct(id: 0, color: Color.green),
@@ -355,8 +361,8 @@ struct CreateNewActionView: View {
                 .font(.system(size: 25, weight: .regular))
             Spacer()
             Button(action: {
+                saveTask()
                 presentationMode.wrappedValue.dismiss()
-                
             }, label: {
                 Image(systemName:"checkmark")
                     .resizable()
@@ -365,7 +371,24 @@ struct CreateNewActionView: View {
                     .foregroundColor(customColor.color)
             })
         }
-        .padding()
+        .padding(.top, 10)
+    }
+    
+    func saveTask() {
+        var taskItems: [TaskItem] = []
+        let task = TaskItem(id: UUID(),
+                            taskType: componenst.self,
+                            taskTitle: title,
+                            taskDescription: description,
+                            creationDate: startDateChooseted,
+                            endDate: endDateChooseted,
+                            tint: customColor.color,
+                            isAllDay: true,
+                            isSetReminder: true,
+                            alertBefore: Date(),
+                            isCompelete: true)
+        taskItems.append(task)
+        closureArrays(taskItems)
     }
     
     func componenstType() {
@@ -385,7 +408,7 @@ struct CreateNewActionView: View {
 
 struct CreateNewActionView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateNewActionView(componenst: .Event)
+        CreateNewActionView(closureArrays: { items in }, componenst: .Event)
     }
 }
 
@@ -406,6 +429,5 @@ struct BoxView: View {
                 .frame(width: 25, height: 25)
                 .foregroundColor(buttonTag.color)
         })
-
     }
 }
