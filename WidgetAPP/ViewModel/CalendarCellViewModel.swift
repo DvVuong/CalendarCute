@@ -6,26 +6,22 @@
 //
 
 import Foundation
-
-class CalendarCellViewModel {
-    var array: [TaskItem] = [
-        TaskItem(id: UUID(),taskType: .Todo,taskTitle: "1",taskDescription: "description",creationDate: Date(),endDate: Date(),tint: .green,isAllDay: true,isSetReminder: true,alertBefore: Date(),isCompelete: true),
-        TaskItem(id: UUID(),taskType: .Todo,taskTitle: "2",taskDescription: "description",creationDate: Date(),endDate: Date(),tint: .red,isAllDay: true,isSetReminder: true,alertBefore: Date(),isCompelete: true),
-        TaskItem(id: UUID(),taskType: .Todo,taskTitle: "3",taskDescription: "description",creationDate: Date(),endDate: Date(),tint: .yellow,isAllDay: true,isSetReminder: true,alertBefore: Date(),isCompelete: true)
-//        TaskItem(id: UUID(),taskType: .Todo,taskTitle: "4",taskDescription: "description",creationDate: Date(),endDate: Date(),tint: .orange,isAllDay: true,isSetReminder: true,alertBefore: Date(),isCompelete: true),
-//        TaskItem(id: UUID(),taskType: .Todo,taskTitle: "5",taskDescription: "description",creationDate: Date(),endDate: Date(),tint: .pink,isAllDay: true,isSetReminder: true,alertBefore: Date(),isCompelete: true),
-//        TaskItem(id: UUID(),taskType: .Todo,taskTitle: "6",taskDescription: "description",creationDate: Date(),endDate: Date(),tint: .purple,isAllDay: true,isSetReminder: true,alertBefore: Date(),isCompelete: true)
-    ]
+import SwiftUI
+class CalendarCellViewModel: ObservableObject {
+    init() {}
     
-    var limetedItem: [TaskItem] = []
-    
-    init() {
-        if array.count > 4 {
-            limetedItem = Array(array.prefix(4))
-        }else {
-            limetedItem = array
+    func monthStruct(with count: Int, startingSpaces: Int, daysInMonth: Int, daysInPrevMonth: Int) -> MonthStruct {
+       let start = startingSpaces == 0 ? startingSpaces + 7 : startingSpaces
+        if count <= start {
+            let day = daysInPrevMonth + count - start
+            return MonthStruct(monthType: .Previous, dayInt: day)
+        }else if count - start > daysInMonth {
+            let day = count - start - daysInMonth
+            
+            return MonthStruct(monthType: .Next, dayInt: day)
         }
+        let day = count - start
+        return MonthStruct(monthType: .Current, dayInt: day)
     }
-    
     
 }

@@ -16,12 +16,13 @@ class TaskItem: ObservableObject, Identifiable {
     @Published var creationDate: Date
     @Published var endDate: Date
     @Published var isCompelete: Bool = false
-    @Published var tint: Color
+    @Published var tint: TintColor
     @Published var isAllDay: Bool
     @Published var isSetReminder: Bool
     @Published var alertBefore: Date
+   
     
-    init(id: UUID, taskType: ComponenstType, taskTitle: String, taskDescription: String, creationDate: Date, endDate: Date, tint: Color, isAllDay: Bool, isSetReminder: Bool, alertBefore: Date, isCompelete: Bool) {
+    init(id: UUID, taskType: ComponenstType, taskTitle: String, taskDescription: String, creationDate: Date, endDate: Date, tint: TintColor, isAllDay: Bool, isSetReminder: Bool, alertBefore: Date, isCompelete: Bool) {
         self.id = id
         self.taskType = taskType
         self.taskDescription = taskDescription

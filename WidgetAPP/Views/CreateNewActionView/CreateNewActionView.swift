@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 enum ColorType: String {
     case green = "green"
@@ -31,11 +32,10 @@ struct ColorStruct {
 
 }
 
-
 struct CreateNewActionView: View {
     //Mark: - Environment
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var taskItem : TaskItem
+    @EnvironmentObject var coreData: CoreDataManager
     //Mark: - @State
     @State private var headerTitle: String = ""
     @State private var title: String = "Tiêu đề"
@@ -44,13 +44,12 @@ struct CreateNewActionView: View {
     @State private var isReminder: Bool = false
     @State private var isChooseTimeStart: Bool = false
     @State private var isChooseTimeEnd: Bool = false
-    @State private var startDateChooseted: Date = Date()
-    @State private var endDateChooseted: Date = Date()
     @State var selected = 0
     @State var customColor: ColorStruct = ColorStruct(color: .green)
+    @State var keyboardIsPresented: Bool = false
     //Mark: -Binding
-    
-    var closureArrays: (([TaskItem]) -> Void)
+    @Binding var startDateChooseted: Date
+    @Binding var endDateChooseted: Date
     
     let arrayButtom: [ButtomStruct] = [
         ButtomStruct(id: 0, color: Color.green),
@@ -83,14 +82,15 @@ struct CreateNewActionView: View {
                             .padding(.top, 380)
                             .transition(.move(edge: .bottom))
                             .animation(.spring())
+                            .onDisappear(perform: {
+                                endDateChooseted = startDateChooseted
+                            })
                     }else if isChooseTimeEnd {
                         Color.black.opacity(0.25)
-                        
                         ChooseTimeDatePickerView(date: $endDateChooseted, cancel: $isChooseTimeEnd, titleHeader: "Chọn thời gian kết thúc")
                             .padding(.top, 380)
                             .transition(.move(edge: .bottom))
                             .animation(.spring())
-                            
                     }
                 }
             }
@@ -102,6 +102,9 @@ struct CreateNewActionView: View {
             customColor.color = color
             selected = index
         })
+        .onDisappear {
+            coreData.fetchDataFromToDoEntities()
+        }
     }
     
     @ViewBuilder
@@ -135,7 +138,6 @@ struct CreateNewActionView: View {
                         Text("Cả ngày")
                     })
                     .toggleStyle(SwitchToggleStyle(tint: customColor.color))
-                    
                 }
                 .padding()
             }
@@ -169,7 +171,6 @@ struct CreateNewActionView: View {
                 })
                 
                 Text(endDateChooseted.formatterDateStyle(with: "EEEE, MMM d, yyyy"))
-                
                 Spacer()
                 Text(endDateChooseted.formatterDateStyle(with: "h:mm a"))
             }
@@ -302,11 +303,9 @@ struct CreateNewActionView: View {
                             .onTapGesture {
                                 title = ""
                             }
-                            
                             .onChange(of: title, perform: { value in
                                 title = value
                             })
-                        
                         TextEditor(text: $description)
                             .frame(height: 80)
                             .onTapGesture {
@@ -375,20 +374,19 @@ struct CreateNewActionView: View {
     }
     
     func saveTask() {
-        var taskItems: [TaskItem] = []
+     let color = TintColor.shared.setUpColor(with: customColor.color)
         let task = TaskItem(id: UUID(),
                             taskType: componenst.self,
                             taskTitle: title,
                             taskDescription: description,
                             creationDate: startDateChooseted,
                             endDate: endDateChooseted,
-                            tint: customColor.color,
+                            tint: color.self,
                             isAllDay: true,
                             isSetReminder: true,
                             alertBefore: Date(),
                             isCompelete: true)
-        taskItems.append(task)
-        closureArrays(taskItems)
+        coreData.addDataToTodoEntities(with: task)
     }
     
     func componenstType() {
@@ -408,11 +406,12 @@ struct CreateNewActionView: View {
 
 struct CreateNewActionView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateNewActionView(closureArrays: { items in }, componenst: .Event)
+        CreateNewActionView(startDateChooseted: .constant(Date()), endDateChooseted: .constant(Date()), componenst: .Event)
     }
 }
 
 struct BoxView: View {
+    @EnvironmentObject var coreData: CoreDataManager
     @Binding var selectedButton: Int
     var buttonTag: ButtomStruct
     @Binding var color: ColorStruct
