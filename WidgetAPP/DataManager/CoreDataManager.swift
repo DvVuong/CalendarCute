@@ -11,7 +11,8 @@ import SwiftUI
 class CoreDataManager: ObservableObject {
     static var shared = CoreDataManager()
     @Published var todoArrays: [ToDoEntity] = []
-    @Published var limitedDatas: [ToDoEntity] = []
+    @Published var diaryArrays: [DiaryEntity] = []
+    
     
     let container: NSPersistentContainer
     init() {
@@ -26,6 +27,7 @@ class CoreDataManager: ObservableObject {
             }
         }
         fetchDataFromToDoEntities()
+        fetchDataFromDiaryEntity()
     }
     
     func fetchDataFromToDoEntities() {
@@ -35,6 +37,16 @@ class CoreDataManager: ObservableObject {
         }
         catch let error {
             print("vuongdv Error", error.localizedDescription)
+        }
+    }
+    
+    func fetchDataFromDiaryEntity() {
+        let request = NSFetchRequest<DiaryEntity>(entityName: "DiaryEntity")
+        do {
+            diaryArrays = try container.viewContext.fetch(request)
+        }
+        catch let error {
+            print("vuongdv Error fetch data from DiaryEntity!, \(error.localizedDescription)")
         }
     }
     
@@ -51,6 +63,15 @@ class CoreDataManager: ObservableObject {
         newToDoItems.green = taskItem.tint.green ?? 0
         newToDoItems.blue = taskItem.tint.blue ?? 0
         newToDoItems.alpha = taskItem.tint.alpha ?? 0
+        save()
+    }
+    
+    func addDiaryItem(with diaryItem: DiaryItem) {
+        let newItem = DiaryEntity(context: container.viewContext)
+        newItem.dateCreate = diaryItem.dateCreate
+        newItem.emoji = diaryItem.emoji
+        newItem.title = diaryItem.title
+        newItem.image = diaryItem.image
         save()
     }
     

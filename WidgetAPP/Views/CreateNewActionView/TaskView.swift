@@ -11,14 +11,16 @@ struct TaskView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var coreData: CoreDataManager
     @EnvironmentObject var dateHolder: DateHolder
-    @State var itemsTodo: ToDoEntity = .init()
-
-    @State var isShow: Bool = false
-    var dayOfMonth: String
-    var checkEmtyItem: Bool = false
+    @State private var itemsTodo: ToDoEntity = .init()
+    @State private var isShow: Bool = false
     @State private var starDate: Date = Date()
     @State private var endDate: Date = Date()
     @State private var indexOfItem: Int = 0
+    @State private var isShowDiary: Bool = false
+    @State private var diaryItem: DiaryEntity = .init()
+    var dayOfMonth: String
+    var checkEmtyItem: Bool = false
+    
     var body: some View {
         VStack(alignment: .leading) {
             HeaderView()
@@ -39,6 +41,23 @@ struct TaskView: View {
                             })
                             .fullScreenCover(isPresented: $isShow, content: {
                                 DetailTaskView(task: $itemsTodo, indexOfItem: $indexOfItem)
+                            })
+                    }
+                }
+                
+                //DiaryItemView
+                
+                ForEach(coreData.diaryArrays.indices, id: \.self) { index in
+                    let item = coreData.diaryArrays[index]
+                    if checkCreateDay(with: item.dateCreate ?? Date()) {
+                        DiaryItemView(with: item)
+                            .onTapGesture {
+                                isShowDiary.toggle()
+                                diaryItem = item
+                                
+                            }
+                            .fullScreenCover(isPresented: $isShowDiary, content: {
+                                DetailDiaryView(diaryItem: $diaryItem)
                             })
                     }
                 }
@@ -138,6 +157,54 @@ struct TaskView: View {
         .clipShape(Circle())
         .padding(15)
         .shadow(color: Color.black.opacity(0.25), radius: 5, x: 5, y: 5)
+    }
+    
+    @ViewBuilder
+    func DiaryItemView(with diaryItem: DiaryEntity) -> some View {
+        HStack {
+            VStack {
+                Image(systemName: "checkmark.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 25, height: 25)
+                    .foregroundColor(.yellow)
+                
+                Rectangle()
+                    .frame(maxWidth: 1, maxHeight: 35)
+            }
+            
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Rectangle()
+                            .frame(maxWidth: 4, maxHeight: 40)
+                            .foregroundColor(.green)
+                            .padding(.top, 5)
+                            .padding(.bottom, 5)
+                        VStack(alignment: .leading) {
+                            Text(diaryItem.title ?? "nil")
+                                .font(.system(size: 25, weight: .semibold))
+                                .foregroundColor(Color.green)
+                        }
+                        Spacer()
+                        VStack {
+                            Text("Ngày tạo")
+                            Text(diaryItem.dateCreate?.format("EEE, MMM d") ?? "nil")
+                                .font(.system(size: 15))
+                        }
+                    }
+                    .padding()
+                }
+            }
+            .background(
+                Color.white
+            )
+            .cornerRadius(10)
+            .shadow(color: .gray, radius: 10, x: 1, y: 1)
+        }
+        .hSpacing(.leading)
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: 150)
     }
     
     private func checkCreateDay(with dateCreate: Date) -> Bool {

@@ -11,17 +11,35 @@ import Photos
 
 struct ImagePickerView: UIViewControllerRepresentable {
     @Binding var image: UIImage
+    var imagePickerSource: ImagePickerSourceType?
+    
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
-        picker.sourceType = .photoLibrary
+        picker.sourceType = setSourceTypeForImagePick()
         picker.allowsEditing = false
+        //setSourceTypeForImagePick()
         return picker
     }
     
     
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {
         ///
+    }
+    
+    private func setSourceTypeForImagePick() -> UIImagePickerController.SourceType {
+        switch imagePickerSource {
+        case .camera:
+            print("vuongdv camera")
+            return .camera
+        case .photolibrabri:
+            print("vuongdv photolibrabri")
+            return .photoLibrary
+        case .none:
+            print("vuongdv camera")
+            return .camera
+            
+        }
     }
     
     func makeCoordinator() -> Coordinator {

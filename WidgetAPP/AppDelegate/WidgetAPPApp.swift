@@ -13,11 +13,9 @@ struct WidgetAPPApp: App {
         WindowGroup {
             let dateHodel = DateHolder()
             let coreData = CoreDataManager()
-            let items = TaskItems()
             ContentView()
                 .environmentObject(coreData)
                 .environmentObject(dateHodel)
-                .environmentObject(items)
         }
     }
 }
