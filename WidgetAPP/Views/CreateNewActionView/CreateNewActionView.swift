@@ -8,28 +8,8 @@
 import SwiftUI
 import UIKit
 
-enum ColorType: String {
-    case green = "green"
-    case red = "red"
-    case blue = "blue"
-    case yellow = "yellow"
-    case orange = "orange"
-    case pink  = "pink"
-    case purple = "purple"
-}
-enum buttomTag: Int {
-    case green = 0
-    case red = 1
-    case blue = 2
-    case yellow = 3
-    case orange = 4
-    case pink  = 5
-    case purple = 6
-}
-
 struct ColorStruct {
     var color: Color
-
 }
 
 struct CreateNewActionView: View {
@@ -297,23 +277,16 @@ struct CreateNewActionView: View {
                     .shadow(color: Color.orange.opacity(0.5), radius: 7, x: 5, y: 5)
                 HStack {
                     VStack(spacing: 0) {
-                        TextEditor(text: $title)
-                            .font(.system(size: 25, weight: .semibold))
-                            .frame(maxHeight: 35)
-                            .onTapGesture {
-                                title = ""
-                            }
-                            .onChange(of: title, perform: { value in
-                                title = value
-                            })
-                        TextEditor(text: $description)
-                            .frame(height: 80)
-                            .onTapGesture {
-                                description = ""
-                            }
-                            .onChange(of: description, perform: { value in
-                                description = value
-                            })
+                        MutilineTextFieldView(hint: "Tiêu đề", text: $title, onEnd: {
+                            UIApplication.shared.sendAction(#selector(UITextView.resignFirstResponder), to: nil, from: nil, for: nil)
+                        })
+                        .frame(maxHeight: 35)
+                        
+                        MutilineTextFieldView(hint: "Thêm chi tiết", text: $description, onEnd: {
+                            UIApplication.shared.sendAction(#selector(UITextView.resignFirstResponder), to: nil, from: nil, for: nil)
+                        })
+                        .frame(maxHeight: 80)
+                        
                     }
                     .padding(.leading, 25)
                     Spacer()

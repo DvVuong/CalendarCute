@@ -27,15 +27,14 @@ struct DiaryView: View {
     @State private var imagePicker: UIImage = UIImage(systemName: "photo")!
     @State private var isShowImagePicker: Bool = false
     @State private var imageSourceType: ImagePickerSourceType?
-    @State private var emoji: UIImage = UIImage(named: "a")!
+    @State private var emoji: UIImage = UIImage(named: "b")!
     
     @Binding var componenstType: ComponenstType
     let arrayImage: [ImageStruct] = [
-        ImageStruct(id: 0, name: "a"),
-        ImageStruct(id: 1, name: "b"),
-        ImageStruct(id: 2, name: "e"),
-        ImageStruct(id: 3, name: "d"),
-        ImageStruct(id: 4, name: "f")
+        ImageStruct(id: 0, name: "b"),
+        ImageStruct(id: 1, name: "e"),
+        ImageStruct(id: 2, name: "d"),
+        ImageStruct(id: 3, name: "f")
     ]
     
     var body: some View {
@@ -196,71 +195,4 @@ struct EmojiView: View {
     }
 }
 
-struct MutilineTextFieldView: UIViewRepresentable {
-    func makeCoordinator() -> Coordinator {
-        return MutilineTextFieldView.Coordinator(parent: self)
-    }
-    
-    var hint: String
-    @Binding var text: String
-    
-    var onEnd: () -> ()
-    func makeUIView(context: Context) -> UITextView {
-        let textView = UITextView()
-        textView.text = hint
-        textView.textColor = .gray
-        textView.font = .systemFont(ofSize: 20)
-        textView.delegate = context.coordinator
-        
-        let toobar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
-        toobar.barStyle = .default
-        
-        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        
-        
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: context.coordinator, action: #selector(context.coordinator.keyboardWillClose))
-        
-        toobar.items = [spacer,doneButton]
-        toobar.sizeToFit()
-        textView.inputAccessoryView = toobar
-        
-        return textView
-    }
-    
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        
-    }
-    
-    typealias UIViewType = UITextView
-    
-    class Coordinator: NSObject, UITextViewDelegate {
-        var parent: MutilineTextFieldView
-        
-        init(parent: MutilineTextFieldView) {
-            self.parent = parent
-        }
-        
-        func textViewDidBeginEditing(_ textView: UITextView) {
-            if textView.text == parent.hint {
-                textView.text = ""
-                textView.textColor = UIColor(Color.primary)
-            }
-        }
-        
-        func textViewDidChange(_ textView: UITextView) {
-            parent.text = textView.text
-        }
-        
-        func textViewDidEndEditing(_ textView: UITextView) {
-            if textView.text == "" {
-                textView.text = parent.hint
-                textView.textColor = .gray
-            }
-        }
-        
-        @objc func keyboardWillClose() {
-            parent.onEnd()
-        }
-    }
-    
-}
+

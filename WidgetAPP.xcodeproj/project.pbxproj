@@ -11,6 +11,7 @@
 		7231CA332AEFEF3700846B1B /* DiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7231CA322AEFEF3700846B1B /* DiaryView.swift */; };
 		723465EC2AE8FA3700BA6996 /* ExtensionCalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723465EB2AE8FA3700BA6996 /* ExtensionCalendarHelper.swift */; };
 		72372E872AE4454E00D3078C /* ComponenstView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72372E862AE4454D00D3078C /* ComponenstView.swift */; };
+		723A8D992B10929A00A32BBE /* AllItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723A8D982B10929A00A32BBE /* AllItemView.swift */; };
 		724171112AE3666700542578 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724171102AE3666700542578 /* CalendarView.swift */; };
 		724171142AE3883A00542578 /* DateHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724171132AE3883A00542578 /* DateHolder.swift */; };
 		724171172AE388FF00542578 /* DateScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724171162AE388FF00542578 /* DateScrollView.swift */; };
@@ -28,6 +29,7 @@
 		7246166D2AE6150900EAA526 /* ChooseTimeDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246166C2AE6150900EAA526 /* ChooseTimeDatePickerView.swift */; };
 		724616702AE68BFB00EAA526 /* ButtomStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7246166F2AE68BFB00EAA526 /* ButtomStruct.swift */; };
 		724616972AE6A5EE00EAA526 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724616962AE6A5EE00EAA526 /* UserDefaultManager.swift */; };
+		7247E11D2B137BBF008EFAB9 /* ListDiaryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247E11C2B137BBF008EFAB9 /* ListDiaryItemView.swift */; };
 		725EE9F62AE4D60800BBE2D9 /* CreateNewActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725EE9F52AE4D60800BBE2D9 /* CreateNewActionView.swift */; };
 		728CA7BD2AEF46040029BE49 /* DetailTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728CA7BC2AEF46040029BE49 /* DetailTaskView.swift */; };
 		728CA7C02AEF619E0029BE49 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728CA7BF2AEF619E0029BE49 /* ImagePickerView.swift */; };
@@ -41,6 +43,8 @@
 		72CA7C2B2AE265A600F7D4E1 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CA7C2A2AE265A600F7D4E1 /* Date+Extensions.swift */; };
 		72CA7C2F2AE2668F00F7D4E1 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CA7C2E2AE2668F00F7D4E1 /* Home.swift */; };
 		72CA7C342AE29AC900F7D4E1 /* OffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CA7C332AE29AC900F7D4E1 /* OffsetKey.swift */; };
+		72DE34552B10476A0084FA15 /* MutilineTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72DE34542B10476A0084FA15 /* MutilineTextFieldView.swift */; };
+		72FDCFB82B1050080080733C /* DiaryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FDCFB72B1050080080733C /* DiaryItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +52,7 @@
 		7231CA322AEFEF3700846B1B /* DiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryView.swift; sourceTree = "<group>"; };
 		723465EB2AE8FA3700BA6996 /* ExtensionCalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCalendarHelper.swift; sourceTree = "<group>"; };
 		72372E862AE4454D00D3078C /* ComponenstView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponenstView.swift; sourceTree = "<group>"; };
+		723A8D982B10929A00A32BBE /* AllItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllItemView.swift; sourceTree = "<group>"; };
 		724171102AE3666700542578 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		724171132AE3883A00542578 /* DateHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHolder.swift; sourceTree = "<group>"; };
 		724171162AE388FF00542578 /* DateScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateScrollView.swift; sourceTree = "<group>"; };
@@ -65,6 +70,7 @@
 		7246166C2AE6150900EAA526 /* ChooseTimeDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseTimeDatePickerView.swift; sourceTree = "<group>"; };
 		7246166F2AE68BFB00EAA526 /* ButtomStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtomStruct.swift; sourceTree = "<group>"; };
 		724616962AE6A5EE00EAA526 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		7247E11C2B137BBF008EFAB9 /* ListDiaryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDiaryItemView.swift; sourceTree = "<group>"; };
 		725EE9F52AE4D60800BBE2D9 /* CreateNewActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewActionView.swift; sourceTree = "<group>"; };
 		728CA7BC2AEF46040029BE49 /* DetailTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTaskView.swift; sourceTree = "<group>"; };
 		728CA7BF2AEF619E0029BE49 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
@@ -80,6 +86,8 @@
 		72CA7C2A2AE265A600F7D4E1 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		72CA7C2E2AE2668F00F7D4E1 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		72CA7C332AE29AC900F7D4E1 /* OffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetKey.swift; sourceTree = "<group>"; };
+		72DE34542B10476A0084FA15 /* MutilineTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MutilineTextFieldView.swift; sourceTree = "<group>"; };
+		72FDCFB72B1050080080733C /* DiaryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,9 +120,20 @@
 			path = CustomCalendarView;
 			sourceTree = "<group>";
 		};
+		723A8D972B10925A00A32BBE /* AllItemView */ = {
+			isa = PBXGroup;
+			children = (
+				723A8D982B10929A00A32BBE /* AllItemView.swift */,
+				7247E11C2B137BBF008EFAB9 /* ListDiaryItemView.swift */,
+			);
+			path = AllItemView;
+			sourceTree = "<group>";
+		};
 		725EE9F82AE5299000BBE2D9 /* CreateNewActionView */ = {
 			isa = PBXGroup;
 			children = (
+				723A8D972B10925A00A32BBE /* AllItemView */,
+				72FDCFB62B104F1E0080733C /* MemoItemView */,
 				72CA7C0B2AE25DE900F7D4E1 /* ContentView.swift */,
 				725EE9F52AE4D60800BBE2D9 /* CreateNewActionView.swift */,
 				7246166C2AE6150900EAA526 /* ChooseTimeDatePickerView.swift */,
@@ -227,8 +246,17 @@
 				724616962AE6A5EE00EAA526 /* UserDefaultManager.swift */,
 				7241A37B2AE7BE1A001FF2CA /* Extension.swift */,
 				724472672AFA26D000EE8B60 /* UIImage+Extensions.swift */,
+				72DE34542B10476A0084FA15 /* MutilineTextFieldView.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		72FDCFB62B104F1E0080733C /* MemoItemView */ = {
+			isa = PBXGroup;
+			children = (
+				72FDCFB72B1050080080733C /* DiaryItemView.swift */,
+			);
+			path = MemoItemView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,6 +349,8 @@
 				724472652AFA23D000EE8B60 /* DiaryItem.swift in Sources */,
 				724171142AE3883A00542578 /* DateHolder.swift in Sources */,
 				724616972AE6A5EE00EAA526 /* UserDefaultManager.swift in Sources */,
+				7247E11D2B137BBF008EFAB9 /* ListDiaryItemView.swift in Sources */,
+				72FDCFB82B1050080080733C /* DiaryItemView.swift in Sources */,
 				7241A37C2AE7BE1A001FF2CA /* Extension.swift in Sources */,
 				72CA7C2B2AE265A600F7D4E1 /* Date+Extensions.swift in Sources */,
 				7244726D2AFA38C600EE8B60 /* DetailDiaryView.swift in Sources */,
@@ -328,8 +358,10 @@
 				728CA7BD2AEF46040029BE49 /* DetailTaskView.swift in Sources */,
 				7241A37F2AE7D9D2001FF2CA /* CalendarCellViewModel.swift in Sources */,
 				728CA7C02AEF619E0029BE49 /* ImagePickerView.swift in Sources */,
+				723A8D992B10929A00A32BBE /* AllItemView.swift in Sources */,
 				7241711F2AE39A6200542578 /* CalendarCell.swift in Sources */,
 				72CA7C2F2AE2668F00F7D4E1 /* Home.swift in Sources */,
+				72DE34552B10476A0084FA15 /* MutilineTextFieldView.swift in Sources */,
 				7245F7F22AF46AFD00374464 /* DataManager.xcdatamodeld in Sources */,
 				7246166D2AE6150900EAA526 /* ChooseTimeDatePickerView.swift in Sources */,
 			);

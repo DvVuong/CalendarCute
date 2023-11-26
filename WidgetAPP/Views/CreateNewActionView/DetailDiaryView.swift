@@ -48,7 +48,7 @@ struct DetailDiaryView: View {
                 HStack {
                     Text(diaryItem.title ?? "")
                         .padding()
-                        .padding(.top, -30)
+                        .padding(.top, -10)
                     Spacer()
                     Image(uiImage: emoji)
                         .resizable()

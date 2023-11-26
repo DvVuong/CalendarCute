@@ -12,41 +12,47 @@ enum AcctionSheet: Identifiable {
     var id: Int {
         hashValue
     }
-    
 }
 
 struct CalendarView: View {
     @EnvironmentObject var dateHolper: DateHolder
+    @EnvironmentObject var coreData: CoreDataManager
+    
     @State private var isShowCreateView: Bool = false
     @State private var componenstType: ComponenstType = ComponenstType.Event
     @State private var isShowMemoAndDiaryView: Bool = false
     @State private var acctionSheet: AcctionSheet?
-    let dayOfWeek: [String] = ["CN", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7"]
     @State private var currentDay: Date = .init()
+    let dayOfWeek: [String] = ["CN", "Th2", "Th3", "Th4", "Th5", "Th6", "Th7"]
+    
     var body: some View {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    DateScrollView()
-                        .environmentObject(dateHolper)
-                        .padding()
-                    DayOfWeekStack()
-                    CalendarGrid()
-                    CurrentDateView()
-                    ComponenstView(acctionSheet: $acctionSheet, componenstType: $componenstType)
-                        .padding()
-                }
-            }
-            
-            .sheet(item: $acctionSheet) { item in
-                switch item {
-                case .first:
-                    CreateNewActionView(startDateChooseted: $currentDay, endDateChooseted: $currentDay, componenst: componenstType)
-                case .second:
-                    DiaryView(componenstType: $componenstType)
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: 0) {
+                DateScrollView()
+                    .environmentObject(dateHolper)
+                    .padding()
+                DayOfWeekStack()
+                CalendarGrid()
+                CurrentDateView()
+                ComponenstView(acctionSheet: $acctionSheet, componenstType: $componenstType)
+                    .padding()
+                
+                if !coreData.diaryArrays.isEmpty {
+                    DiaryViewItem()
                 }
             }
         }
-
+        
+        .sheet(item: $acctionSheet) { item in
+            switch item {
+            case .first:
+                CreateNewActionView(startDateChooseted: $currentDay, endDateChooseted: $currentDay, componenst: componenstType)
+            case .second:
+                DiaryView(componenstType: $componenstType)
+            }
+        }
+    }
+    
     @ViewBuilder
     func DayOfWeekStack() -> some View {
         HStack(spacing: 0) {
@@ -58,12 +64,12 @@ struct CalendarView: View {
             }
         }
     }
-
+    
     @ViewBuilder
     func createBoderFrame() -> some View {
         RoundedRectangle(cornerRadius: 0).stroke(Color.orange)
     }
-
+    
     @ViewBuilder
     func CalendarGrid() -> some View {
         VStack(spacing: 0) {
@@ -72,7 +78,7 @@ struct CalendarView: View {
             let startingSpaces = CalendarHelper().weekDay(firstDatOfMonth)
             let prevMonth = CalendarHelper().perviousMonth(dateHolper.date)
             let daysInPrevMonth = CalendarHelper().dayinMonth(prevMonth)
-
+            
             ForEach(0..<6) { row in
                 HStack(spacing: 0) {
                     ForEach(1..<8) { column in
@@ -83,6 +89,34 @@ struct CalendarView: View {
                                      daysInPrevMonth: daysInPrevMonth)
                             .environmentObject(dateHolper)
                     }
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func DiaryViewItem() -> some View {
+        VStack {
+            HStack {
+                Text("Memo")
+                    .font(.title)
+                
+                Spacer()
+                
+                Button(action: {
+                    
+                }, label: {
+                    NavigationLink("Xem tất cả", destination: AllItemView()
+                                    .navigationBarHidden(true))
+                })
+            }
+            .padding()
+            
+            ScrollView(.horizontal) {
+                HStack {
+                ForEach(coreData.diaryArrays, id: \.self) { item in
+                    DiaryItemView(diary: item)
+                  }
                 }
             }
         }
@@ -102,7 +136,7 @@ struct CurrentDateView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 30, height: 30)
-
+            
             Text(CalendarHelper().convertCurrentDayString(with: .full))
                 .font(.system(size: 15))
                 .bold()
